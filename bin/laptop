@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#Left
+tmux split-window -h -p 50
+#Right
+tmux split-window -v -p 30

@@ -1,0 +1,126 @@
+# dein.toml
+# ======================================
+# general
+
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+
+[[plugins]]
+repo = 'markonm/traces.vim'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+hook_add = '''
+    map <Leader> <Plug>(easymotion-prefix)
+    let g:EasyMotion_do_mapping = 0 " Disable default mappings
+    " Jump to anywhere you want with minimal keystrokes, with just one key binding.
+    " `s{char}{label}`
+    " nmap s <Plug>(easymotion-overwin-f)
+    " or
+    " `s{char}{char}{label}`
+    " Need one more keystroke, but on average, it may be more comfortable.
+    nmap s <Plug>(easymotion-overwin-f2)
+    " Turn on case insensitive feature
+    let g:EasyMotion_smartcase = 1
+    " JK motions: Line motions
+    map <Leader>j <Plug>(easymotion-j)
+    map <Leader>k <Plug>(easymotion-k)
+'''
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+    let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+    let g:indentLine_faster = 1
+'''
+
+[[plugins]]
+repo = 'mattn/googlesuggest-complete-vim'
+hook_add = '''
+    set completefunc=GoogleComplete
+    function! GoogleComplete(findstart, base)
+    if a:findstart
+        let line = getline('.')
+        let start = col('.') - 1
+        while start > 0 && line[start - 1] =~ '\S'
+            let start -= 1
+        endwhile
+        return start
+    else
+        let ret = system('curl -s -G --data-urlencode "q='
+                    \ . a:base . '" "http://suggestqueries.google.com/complete/search?&client=firefox&hl=ja&ie=utf8&oe=utf8"')
+        let res = split(substitute(ret,'\[\|\]\|"',"","g"),",")
+        return res
+    endif
+endfunction
+'''
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+
+# ======================================
+# fonts and colors
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+hook_add = '''
+    colo hybrid
+'''
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+    set laststatus=2
+    set noshowmode
+    let g:lightline = { 
+    \  'colorscheme': 'powerline',
+    \  'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+    \  'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
+    \}
+'''
+
+[[plugins]]
+repo = 'luochen1990/rainbow'
+hook_add = '''
+    let g:rainbow_active = 1
+'''
+
+# ======================================
+# fuzzy finder
+
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --bin'
+merged = '0'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+on_cmd = [
+    'Files',
+    'ProjectFiles',
+    'Buffers',
+    'BLines',
+    'History',
+    'Tags',
+    'BTags',
+    'GFiles',
+    'Ag',
+]
+hook_add = '''
+    nnoremap <silent> ,a :<C-u>Ag<CR>
+    nnoremap <silent> ,f :<C-u>Files<CR>
+    nnoremap <silent> ,b :<C-u>Buffers<CR>
+    nnoremap <silent> ,m :<C-u>History<CR>
+    set rtp+=$XDG_CACHE_HOME/fzf "if installed in $XDG_CACHE_HOME
+    " set rtp+=~/.fzf "if installed in ~/.fzf
+'''
+
+#[[plugins]]
+#repo = 'rking/ag.vim'
+
