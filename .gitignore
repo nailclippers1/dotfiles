@@ -1,6 +1,8 @@
 *.swp
 *.gpg
 .cache/
+.DS_Store
+Thumbs.db
 bin/
 neomuttrc
 
