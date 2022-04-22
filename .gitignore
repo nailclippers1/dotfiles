@@ -1,5 +1,6 @@
 *.swp
-.cache/
-neomuttrc
 *.gpg
+.cache/
+.bin/
+neomuttrc
 

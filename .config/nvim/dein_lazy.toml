@@ -170,6 +170,12 @@ on_source = 'ddc.vim'
 repo = 'Shougo/ddc-nvim-lsp'
 on_source = 'ddc.vim'
 
+# dictionary sources
+
+[[plugins]]
+repo = 'matsui54/ddc-dictionary'
+on_source = 'ddc.vim'
+
 # =====================================
 # fuzzy finder
 
