@@ -6,12 +6,16 @@ if((Get-ExecutionPolicy -Scope LocalMachine) -ne "RemoteSigned"){Set-ExecutionPo
 
 #Aliases
 Set-Alias grep Select-String
+Set-Alias Chrome "C:\Program Files\Google\Chrome\Application\chrome.exe"
 Set-Alias nvim 'C:\Program Files\Neovim\bin\nvim.exe'
 Set-Alias vim 'C:\Program Files\Neovim\bin\nvim.exe'
 Set-Alias vi 'C:\Program Files\Neovim\bin\nvim.exe'
 
-Set-Alias gitup 'git add -A && git commit -m $(Get-Date -F G) && git push'
-#Set-Alias gitup 'git add -A && git commit -m $(Get-Date -F G) && git push origin $(git branch | sed -n -e "s/^\* \(.*\)/\1/p")'
+function gitup(){
+    git add -A && git commit -m $(Get-Date -F G) && git push
+}
+
+#Set-Alias gitup 'git add -A && git commit -m "$(date)" && git push origin $(git branch | sed -n -e "s/^\* \(.*\)/\1/p") }
 
 #Commands
 #ll

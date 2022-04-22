@@ -34,8 +34,8 @@ repo = 'kannokanno/previm'
 on_source = ['vim-markdown']
 hook_add = '''
     autocmd BufRead,BufNewFile *.md set filetype=markdown
-    "let g:previm_open_cmd = 'C:\\Program\ Files\\Google\\Chrome\\Application\\chrome.exe'
-    let g:previm_open_cmd = 'C:\\Program\ Files\\Mozilla\ Firefox\\firefox.exe'
+    let g:previm_open_cmd = 'Chrome'
+    "let g:previm_open_cmd = 'Firefox'
     "let g:previm_wsl_mode = 1
     nnoremap <silent> <C-p> :PrevimOpen<CR>
 '''
@@ -170,11 +170,28 @@ on_source = 'ddc.vim'
 repo = 'Shougo/ddc-nvim-lsp'
 on_source = 'ddc.vim'
 
-# dictionary sources
+# dictionary source
 
 [[plugins]]
 repo = 'matsui54/ddc-dictionary'
 on_source = 'ddc.vim'
+hook_source = '''
+
+call ddc#custom#patch_global('sourceParams', {
+      \ 'dictionary': {'dictPaths': 
+      \ ['/usr/share/dict/american-english',
+      \ '/usr/share/dict/words',],
+      \ 'smartCase': v:true,
+      \ 'showMenu': v:false,
+      \ }
+      \})
+
+call ddc#custom#patch_global('sources', ['dictionary'])
+call ddc#custom#patch_global('sourceOptions', {
+      \ '_': {'matchers': ['matcher_head']},
+      \ 'dictionary': {'mark': 'D'},
+      \})
+'''
 
 # =====================================
 # fuzzy finder
