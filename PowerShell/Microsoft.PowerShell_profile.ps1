@@ -12,7 +12,7 @@ Set-Alias vim 'C:\Program Files\Neovim\bin\nvim.exe'
 Set-Alias vi 'C:\Program Files\Neovim\bin\nvim.exe'
 
 function gitup(){
-    git add -A && git commit -m $(Get-Date -F G) && git push
+    git add -A && git commit -m $(Get-Date -F G) && git push master
 }
 
 #Set-Alias gitup 'git add -A && git commit -m "$(date)" && git push origin $(git branch | sed -n -e "s/^\* \(.*\)/\1/p") }
