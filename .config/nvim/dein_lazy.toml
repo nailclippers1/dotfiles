@@ -115,28 +115,43 @@ hook_source = '''
          \ 'around',
          \ 'nvim-lsp',
          \ 'file',
+         \ 'dictionary',
+         \ 'mocword',
          \ ])
-    call ddc#custom#patch_global('sourceOptions', {
+   
+   call ddc#custom#patch_global('sourceOptions', {
          \ '_': {
          \   'matchers': ['matcher_head'],
          \   'sorters': ['sorter_rank'],
          \   'converters': ['converter_remove_overlap'],
          \ },
          \ 'around': {'mark': 'Around'},
-         \   'nvim-lsp': {
+         \ 'nvim-lsp': {
          \   'mark': 'LSP',
          \   'forceCompletionPattern': '\.\w*|:\w*|->\w*',
          \ },
          \ 'file': {
          \   'mark': 'file',
          \   'isVolatile': v:true,
-         \   'forceCompletionPattern': '\S/\S*'
-         \ }})
+         \   'forceCompletionPattern': '\S/\S*',
+         \ },
+         \ 'dictionary': {'mark': 'Dictionary'},
+         \ 'mocword': {
+         \   'mark': 'mocword',
+         \   'minAutoCompleteLength': 3,
+         \   'isVolatile': v:true,
+         \ },
+         \})
     
     call ddc#custom#patch_global('sourceParams', {
-         \ 'around': {'maxSize': 500},
-         \ })
-     
+         \ 'around': {'maxSize': 50},
+         \ 'dictionary': {'dictPaths': 
+         \   ['C:\\Users\\taishi\\share\\dict\\american-english',
+         \   'C:\\Users\taishi\\share\\dict\\words',],
+         \   'smartCase': v:true,
+         \   'showMenu': v:false,
+         \ }
+         \})
     inoremap <silent><expr> <TAB>
          \ ddc#map#pum_visible() ? '<C-n>' :
          \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
@@ -173,127 +188,9 @@ on_source = 'ddc.vim'
 # dictionary source
 
 [[plugins]]
+repo = 'Shougo/ddc-mocword'
+on_source = 'ddc.vim'
+
+[[plugins]]
 repo = 'matsui54/ddc-dictionary'
 on_source = 'ddc.vim'
-hook_source = '''
-
-call ddc#custom#patch_global('sourceParams', {
-      \ 'dictionary': {'dictPaths': 
-      \ ['/usr/share/dict/american-english',
-      \ '/usr/share/dict/words',],
-      \ 'smartCase': v:true,
-      \ 'showMenu': v:false,
-      \ }
-      \})
-
-call ddc#custom#patch_global('sources', ['dictionary'])
-call ddc#custom#patch_global('sourceOptions', {
-      \ '_': {'matchers': ['matcher_head']},
-      \ 'dictionary': {'mark': 'D'},
-      \})
-'''
-
-# =====================================
-# fuzzy finder
-
-[[plugins]]
-repo = 'Shougo/ddu.vim'
-depends = ['denops.vim']
-hook_source = '''
-
-"ddu settings.
-call ddu#custom#patch_global({
-    \   'ui': 'ff',
-    \   'sources': [{'name':'file','params':{}},{'name':'mr'},{'name':'register'},{'name':'buffer'}],
-    \   'sourceOptions': {
-    \     '_': {
-    \       'matchers': ['matcher_substring'],
-    \     },
-    \   },
-    \   'kindOptions': {
-    \     'file': {
-    \       'defaultAction': 'open',
-    \     },
-    \   },
-    \ })
-
-"ddu-key-setting
-autocmd FileType ddu-ff call s:ddu_my_settings()
-function! s:ddu_my_settings() abort
-  nnoremap <buffer><silent> <CR>
-        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-  nnoremap <buffer><silent> <Space>
-        \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
-  nnoremap <buffer><silent> i
-        \ <Cmd>call ddu#ui#ff#do_action('openFilterWinow')<CR>
-  nnoremap <buffer><silent> q
-        \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-endfunction
-
-autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
-function! s:ddu_filter_my_settings() abort
-  inoremap <buffer><silent> <CR>
-  \ <Esc><Cmd>close<CR>
-  nnoremap <buffer><silent> <CR>
-  \ <Cmd>close<CR>
-  nnoremap <buffer><silent> q
-  \ <Cmd>close<CR>
-endfunction
-
-"ddu keymapping.
-nnoremap <SID>[ug] <Nop>
-nmap ; <SID>[ug]
-
-nnoremap <silent> <SID>[ug]m :<C-u>Ddu mr<CR>
-nnoremap <silent> <SID>[ug]b :<C-u>Ddu buffer<CR>
-nnoremap <silent> <SID>[ug]r :<C-u>Ddu register<CR>
-nnoremap <silent> <SID>[ug]n :<C-u>Ddu file -source-param-new -volatile<CR>
-nnoremap <silent> <SID>[ug]f :<C-u>Ddu file<CR>
-
-'''
-
-[[plugins]]
-repo = 'Shougo/ddu-ui-ff'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-kind-file'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-register'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'kuuote/ddu-source-mr'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'lambdalisue/mr.vim'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'shun/ddu-source-buffer'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-filter-matcher_substring'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-commands.vim'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file_rec'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file_old'
-on_source = 'ddu.vim'
-
-
