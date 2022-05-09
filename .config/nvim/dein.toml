@@ -1,5 +1,12 @@
 # dein.toml
 # ======================================
+
+# Enable dein toml syntax
+hook_add = '''
+  autocmd CursorHold *.toml call dein#toml#syntax()
+'''
+
+# ======================================
 # general
 
 [[plugins]]
@@ -58,11 +65,11 @@ hook_add = '''
 endfunction
 '''
 
-[[plugins]]
-repo = 'vim-denops/denops.vim'
+# ======================================
+# dark-power series
 
 [[plugins]]
-repo = 'Shougo/pum.vim'
+repo = 'vim-denops/denops.vim'
 
 [[plugins]]
 repo = 'BurntSushi/ripgrep'
@@ -118,127 +125,4 @@ hook_add = '''
     nnoremap <silent> ,m :<C-u>History<CR>
     nnoremap <silent> ,r :<C-u>Rg<CR>
 '''
-
-# =====================================
-# fuzzy finder (ddu)
-
-[[plugins]]
-repo = 'Shougo/ddu.vim'
-depends = ['denops.vim']
-hook_source = '''
-
-"ddu settings.
-call ddu#custom#patch_global({
-    \   'ui': 'ff',
-    \   'sources': [{'name':'file','params':{}},{'name':'mr'},{'name':'register'},{'name':'buffer'}],
-    \   'sourceOptions': {
-    \     '_': {
-    \       'matchers': ['matcher_substring'],
-    \     },
-    \   },
-    \   'sourceParams': {
-    \     'rg': {
-    \       'args': ['--column', '--no-heading', '--color', 'never'],
-    \     },
-    \   },
-    \   'kindOptions': {
-    \     'file': {
-    \       'defaultAction': 'open',
-    \     },
-    \   },
-    \ })
-
-"ddu-key-setting
-autocmd FileType ddu-ff call s:ddu_my_settings()
-function! s:ddu_my_settings() abort
-  nnoremap <buffer><silent> <CR>
-        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-  nnoremap <buffer><silent> <Space>
-        \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
-  nnoremap <buffer><silent> i
-        \ <Cmd>call ddu#ui#ff#do_action('openFilterWinow')<CR>
-  nnoremap <buffer><silent> q
-        \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-endfunction
-
-autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
-function! s:ddu_filter_my_settings() abort
-  inoremap <buffer><silent> <CR>
-  \ <Esc><Cmd>close<CR>
-  nnoremap <buffer><silent> <CR>
-  \ <Cmd>close<CR>
-  nnoremap <buffer><silent> q
-  \ <Cmd>close<CR>
-endfunction
-
-"ddu keymapping.
-"nnoremap <SID>[ug] <Nop>
-"nmap ; <SID>[ug]
-
-nnoremap <silent> <Leader>m :<C-u>Ddu mr<CR>
-nnoremap <silent> <Leader>b :<C-u>Ddu buffer<CR>
-nnoremap <silent> <Leader>r :<C-u>Ddu register<CR>
-nnoremap <silent> <Leader>n :<C-u>Ddu file -source-param-new -volatile<CR>
-nnoremap <silent> <Leader>f :<C-u>Ddu file<CR>
-
-nmap <silent> ;g <Cmd>call ddu#start({
-\   'name': 'grep',
-\   'sources':[
-\     {'name': 'rg', 'params': {'input': expand('<cword>')}}
-\   ],
-\ })<CR>
-'''
-
-#ddu source
-[[plugins]]
-repo = 'Shougo/ddu-source-file'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'kuuote/ddu-source-mr'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-register'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'shun/ddu-source-buffer'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'shun/ddu-source-rg'
-on_source = 'ddu.vim'
-
-#ddu ui
-[[plugins]]
-repo = 'Shougo/ddu-ui-ff'
-on_source = 'ddu.vim'
-
-#ddu kind
-[[plugins]]
-repo = 'Shougo/ddu-kind-file'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'lambdalisue/mr.vim'
-on_source = 'ddu.vim'
-
-#ddu filter
-[[plugins]]
-repo = 'Shougo/ddu-filter-matcher_substring'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-commands.vim'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file_rec'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file_old'
-on_source = 'ddu.vim'
-
 

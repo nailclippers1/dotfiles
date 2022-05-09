@@ -24,16 +24,20 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
   " .toml file
-  let s:rc_dir = expand('~/.config/nvim')
-  if !isdirectory(s:rc_dir)
-    call mkdir(s:rc_dir, 'p')
+  let s:base_dir = expand('~/.config/nvim')
+  if !isdirectory(s:base_dir)
+    call mkdir(s:base_dir, 'p')
   endif
-  let s:toml = s:rc_dir . '/dein.toml'
-  let s:lazy_toml = s:rc_dir . '/dein_lazy.toml'
+  let s:dein_toml      = s:base_dir . '/dein.toml'
+  let s:dein_lazy_toml = s:base_dir . '/dein_lazy.toml'
+  let s:dein_ddc_toml  = s:base_dir . '/ddc.toml'
+  let s:dein_ddu_toml  = s:base_dir . '/ddu.toml'
 
   " read toml and cache
-  call dein#load_toml(s:toml,       {'lazy': 0})
-  call dein#load_toml(s:lazy_toml,  {'lazy': 1})
+  call dein#load_toml(s:dein_toml,      {'lazy': 0})
+  call dein#load_toml(s:dein_lazy_toml, {'lazy': 1})
+  call dein#load_toml(s:dein_ddc_toml,  {'lazy': 1})
+  call dein#load_toml(s:dein_ddu_toml,  {'lazy': 1})
 
   " end settings
   call dein#end()

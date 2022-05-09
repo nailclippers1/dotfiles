@@ -16,6 +16,7 @@ if has('mac') " for mac
 endif
 
 if has('win64') " for Windows 64bit
+    let $PATH = "C:\\Program Files\\Git\\usr\\bin;" .$PATH
     " disable input method when exiting Insert Mode
     autocmd InsertLeave * :call system('zenhan.exe 0')
     autocmd CmdlineLeave * :call system('zenhan.exe 0')
@@ -56,7 +57,8 @@ nmap <Esc><Esc> :nohlsearch<CR><Esc>
 set encoding=utf-8
 scriptencoding utf-8
 
-" Japanese
+" Language
+language message C
 set formatoptions+=mMj
 set ambiwidth=double
 set display+=lastline
@@ -134,7 +136,7 @@ autocmd TermOpen * startinsert
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-Space>
 
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : MyInsCompl()
+" inoremap <expr><Tab> pumvisible() ? "\<C-n>" : MyInsCompl()
 function! MyInsCompl()
   let c = nr2char(getchar())
   if c == "l"
@@ -220,28 +222,6 @@ nmap <Tab> :tabnext<Return>
 " plugin manager
 
 source $XDG_CONFIG_HOME/nvim/dein.vim
-
-autocmd FileType ddu-ff call s:ddu_my_settings()
-function! s:ddu_my_settings() abort
-  nnoremap <buffer><silent> <CR>
-        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-  nnoremap <buffer><silent> <Space>
-        \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
-  nnoremap <buffer><silent> i
-        \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
-  nnoremap <buffer><silent> q
-        \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-endfunction
-
-autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
-function! s:ddu_filter_my_settings() abort
-  inoremap <buffer><silent> <CR>
-  \ <Esc><Cmd>close<CR>
-  nnoremap <buffer><silent> <CR>
-  \ <Cmd>close<CR>
-  nnoremap <buffer><silent> q
-  \ <Cmd>close<CR>
-endfunction
 
 " ======================================
 " filer 

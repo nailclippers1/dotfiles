@@ -1,0 +1,239 @@
+# ddu.toml
+# =====================================
+
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+depends = 'denops.vim'
+on_source = 'denops.vim'
+
+# =====================================
+# Key mappings
+
+hook_add = '''
+  nnoremap s<Space> <Cmd>Ddu
+  \ -name=files file_rec
+  \ -source-option-path='`fnamemodify($MYVIMRC, ':h').'/rc'`'<CR>
+  nnoremap ;s <Cmd>Ddu 
+  \ -name=files file_point file_old
+  \ `finddir('.git', ';') != '' ? 'file_external' : 'file_rec'`
+  \ -sync -ui-param-displaySourceName=short<CR>
+ " nnoremap / <Cmd>Ddu
+ " \ -name=search line
+ " \ -ui-param-startFilter<CR>
+  nnoremap * <Cmd>Ddu
+  \ -name=search line -input=`expand('<cword>')`
+  \ -ui-param-startFilter=v:false<CR>
+  nnoremap ;g <Cmd>Ddu
+  \ -name=search rg
+  \ -ui-param-ignoreEmpty
+  \ -source-param-input=`input('Pattern: ')`<CR>
+  nnoremap n <Cmd>Ddu
+  \ -name=search -resume
+  \ -ui-param-startFilter=v:false<CR>
+  nnoremap ;r <Cmd>Ddu
+  \ -buffer-name=register register
+  \ -ui-param-autoResize<CR>
+  xnoremap <expr> ;r (mode() ==# 'V' ? '"_R<Esc>' : '"_d') .
+  \ '<Cmd>Ddu -buffer-name=register register
+  \  -source-option-defaultAction=insert -ui-param-autoResize<CR>'
+  nnoremap sg <Cmd>Ddu
+  \ dein<CR>
+'''
+
+# =====================================
+# Settings
+
+hook_source = '''
+call ddu#custom#alias('source', 'file_rg', 'file_external')
+
+call ddu#custom#patch_global({
+\   'ui': 'ff',
+\   'sourceOptions': {
+\     '_': {
+\       'ignoreCase': v:true,
+\       'matchers': ['matcher_substring'],
+\     },
+\     'file_old': {
+\       'matchers': ['matcher_substring', 'matcher_relative', 'matcher_hidden']
+\     },
+\     'file_rec': {
+\       'matchers': ['matcher_substring', 'matcher_hidden']
+\     },
+\   },
+\   'filterParams': {
+\     'matcher_substring': {
+\       'highlightMatched': 'Search',
+\     },
+\   },  
+\   'kindOptions': {
+\     'file': {
+\       'defaultAction': 'open',
+\     },
+\   },
+\})
+'''
+
+# =====================================
+# Standard UI
+
+[[plugins]]
+repo = 'Shougo/ddu-commands.vim'
+depends = 'ddu.vim'
+on_cmd = 'Ddu'
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+on_source = 'ddu.vim'
+
+[plugins.ftplugin]
+ddu-ff = '''
+nnoremap <buffer> <CR>
+\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+nnoremap <buffer> <Space>
+\ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+nnoremap <buffer> i
+\ <Cmd>call ddu#ui#ff#do_action('openFilterWinow')<CR>
+nnoremap <buffer> <C-l>
+\ <Cmd>call ddu#ui#ff#do_action('refreshItems')<CR>
+nnoremap <buffer> p
+\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
+nnoremap <buffer> q
+\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+nnoremap <buffer> a
+\ <Cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
+nnoremap <buffer> c
+\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'cd'})<CR>
+nnoremap <buffer> d
+\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'delete'})<CR>
+nnoremap <buffer> e
+\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'edit'})<CR>
+nnoremap <buffer> E
+\ <Cmd>call ddu#ui#ff#do_action('itemAction',
+\ {'params': eval(input('params: '))})<CR>
+nnoremap <buffer> v
+\ <Cmd>call ddu#ui#ff#do_action('itemAction',
+\ {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+nnoremap <buffer> N
+\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'new'})<CR>
+nnoremap <buffer> r
+\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>
+nnoremap <buffer> u
+\ <Cmd>call ddu#ui#ff#do_action('updateOptions', {
+\   'sourceOptions': {
+\     '_': {
+\       'matchers': [],
+\     },
+\   },
+\ })<CR>
+'''
+
+ddu-ff-filter = '''
+inoremap <buffer> <CR>
+\ <Esc><Cmd>close<CR>
+nnoremap <buffer> <CR>
+\ <Cmd>close<CR>
+'''
+
+# =====================================
+# File listing UI
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-filer'
+on_source = 'ddu.vim'
+
+[plugins.ftplugin]
+ddu-filer = '''
+nnoremap <buffer> <Space>
+\ <Cmd>call ddu#ui#filer#do_action('toggleSelectItem')<CR>
+nnoremap <buffer> q
+\ <Cmd>call ddu#ui#filer#do_action('quit')<CR>
+nnoremap <buffer> o
+\ <Cmd>call ddu#ui#filer#do_action('expandItem')<CR>
+nnoremap <buffer> O
+\ <Cmd>call ddu#ui#filer#do_action('collapseItem')<CR>
+nnoremap <buffer> d
+\ <Cmd>call ddu#ui#filer#do_action('itemAction',
+\ {'name': 'delete'})<CR>
+nnoremap <buffer> x
+\ <Cmd>call ddu#ui#filer#do_action('itemAction',
+\ {'name': 'executeSystem'})<CR>
+nnoremap <buffer> K
+\ <Cmd>call ddu#ui#filer#do_action('itemAction',
+\ {'name': 'newDirectory'})<CR>
+nnoremap <buffer> N
+\ <Cmd>call ddu#ui#filer#do_action('itemAction',
+\ {'name': 'newFile'})<CR>
+nnoremap <buffer> ~
+\ <Cmd>call ddu#ui#filer#do_action('itemAction',
+\ {'name': 'narrow', 'params': {'path': expand('~')}})<CR>
+nnoremap <buffer> h
+\ <Cmd>call ddu#ui#filer#do_action('itemAction',
+\ {'name': 'narrow', 'params': {'path': ".."}})<CR>
+nnoremap <buffer><expr> <CR>
+\ ddu#ui#filer#is_directory() ?
+\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>" :
+\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+'''
+
+# =====================================
+# Plugins for sources
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_old'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_point'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-line'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-register'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'shun/ddu-source-rg'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'lambdalisue/mr.vim'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kuuote/ddu-source-mr'
+on_source = 'ddu.vim'
+
+# =====================================
+# Plugins for matcher
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_relative'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_hidden'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+on_source = 'ddu.vim'
+
