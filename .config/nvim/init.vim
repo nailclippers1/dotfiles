@@ -7,9 +7,6 @@ if has('unix') " for unix
 endif
 
 if system('uname -r') =~ ".*WSL2\n" " for wsl2
-    " disable input method when exiting Insert Mode
-    autocmd InsertLeave * :call system('zenhan.exe 0')
-    autocmd CmdlineLeave * :call system('zenhan.exe 0')
 endif
 
 if has('mac') " for mac
@@ -17,9 +14,6 @@ endif
 
 if has('win64') " for Windows 64bit
     let $PATH = "C:\\Program Files\\Git\\usr\\bin;" .$PATH
-    " disable input method when exiting Insert Mode
-    autocmd InsertLeave * :call system('zenhan.exe 0')
-    autocmd CmdlineLeave * :call system('zenhan.exe 0')
 endif
 
 " only for vscode-neovim

@@ -5,6 +5,9 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #Include alt-ime-ahk.ahk
 
+~Esc::IME_SET(0)
+~^[::IME_SET(0)
+
 ;
 ; Fn: F24
 ;
@@ -26,14 +29,20 @@ F24 & p::send, {Blind}{PrintScreen}
 F24 & [::send, {Blind}{ScrollLock}
 F24 & ]::send, {Blind}{sc045} ; Pause / Break
 
-F24 & sc027::send, {Blind}{Home} ; Semicolon
-F24 & sc028::send, {Blind}{End}  ; Apostrophe
-F24 & sc034::send, {Blind}{PgUp} ; Comma
-F24 & sc035::send, {Blind}{PgDn} ; Slash
-
 F24 & h::send, {Blind}{Left}
 F24 & l::send, {Blind}{Right}
 F24 & k::send, {Blind}{Up}
 F24 & j::send, {Blind}{Down}
 
+F24 & sc027::send, {Blind}{Backspace} ; Semicolon
+F24 & u::send,     {Blind}^{z}        ; undo
+F24 & r::send,     {Blind}^{y}        ; redo
+F24 & x::send,     {Blind}{Delete}    ; x
+
+F24 & m::send,     {Blind}{Home} ; m
+F24 & sc033::send, {Blind}{End}  ; Comma
+F24 & sc034::send, {Blind}{PgUp} ; Period
+F24 & sc035::send, {Blind}{PgDn} ; Slash
+
 F24 & Tab::send, {Blind}{CapsLock}
+F24 & Space::send, {Blind}{Enter}
