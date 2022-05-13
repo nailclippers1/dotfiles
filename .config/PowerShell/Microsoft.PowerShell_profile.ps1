@@ -4,7 +4,25 @@
 # allow PowerShell scripts to run
 if((Get-ExecutionPolicy -Scope LocalMachine) -ne "RemoteSigned"){Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force}
 
-#Aliases
+# Symbolic links
+$source = "Dropbox\Sources"
+if(!(Test-Path .config)) {
+    New-Item -Name .config -ItemType Junction -Value $HOME\dotfiles\.config
+}
+if(!(Test-Path bin)) {
+    New-Item -Name bin -ItemType Junction -Value $source\bin
+}
+if(!(Test-Path share)) {
+    New-Item -Name share -ItemType Junction -Value $source\share
+}
+
+# Environment variables
+$env:LANG="en"
+$env:MOCWORD_DATA="$HOME\share\dict\mocword.sqlite"
+$env:XDG_CACHE_HOME="$HOME\.cache"
+$env:XDG_CONFIG_HOME="$HOME\.config"
+
+# Aliases
 Set-Alias grep Select-String
 Set-Alias Chrome "C:\Program Files\Google\Chrome\Application\chrome.exe"
 Set-Alias Firefox "C:\Program Files\Mozilla Firefox\firefox.exe"
