@@ -1,13 +1,15 @@
 # allow PowerShell scripts to run
 if((Get-ExecutionPolicy -Scope LocalMachine) -ne "RemoteSigned"){Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force}
 
+# set Sources path
+$sources = "$env:USERPROFILE\Dropbox\Sources"
+
 echo "set Registry entries"
 New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
 
 echo "change $profile path for (Microsoft.PowerShell_profile.ps1) "
 Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" "Personal"
-New-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" "Personal" -Value "$env:USERPROFILE\.config\windows" -PropertyType ExpandString
-
+New-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" "Personal" -Value "$env:USERPROFILE\.config" -PropertyType ExpandString
 
 echo "restore context menu to Windows 10 style"
 if (!(Test-Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}")) {
@@ -28,19 +30,24 @@ echo "set context menu for vim"
 #}
 
 echo "set Symbolic links"
-$source = "Dropbox\Sources"
-if (!(Test-Path .config)) {
-    New-Item $env:USERPROFILE\.config -ItemType Junction -Value dotfiles\.config
+if (!(Test-Path $env:USERPROFILE\.config)) {
+    New-Item $env:USERPROFILE\.config -ItemType Junction -Value $env:USERPROFILE\dotfiles\.config
 }
-if (!(Test-Path bin)) {
-    New-Item $env:USERPROFILE\bin -ItemType Junction -Value $source\bin
+if (!(Test-Path $env:USERPROFILE\bin)) {
+    New-Item $env:USERPROFILE\bin -ItemType Junction -Value $sources\bin
 }
-if (!(Test-Path share)) {
-    New-Item $env:USERPROFILE\share -ItemType Junction -Value $source\share
+if (!(Test-Path $env:USERPROFILE\share)) {
+    New-Item $env:USERPROFILE\share -ItemType Junction -Value $sources\share
 }
+
 if (!(Test-Path $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState.sav)) {
     Rename-Item $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState.sav
-    New-Item $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState -ItemType Junction -Value $env:USERPROFILE\.config\windows\WindowsTerminal\LO
+    New-Item $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState -ItemType Junction -Value $env:USERPROFILE\.config\windows\WindowsTerminal\LocalState
+}
+
+if (!(Test-Path $env:APPDATA\Code\User.sav)) {
+    Rename-Item $env:APPDATA\Code\User $env:APPDATA\Code\User.sav
+    New-Item $env:APPDATA\Code\User -ItemType Junction -Value $env:USERPROFILE\.config\vscode\User
 }
 
 echo "set Environment variables"

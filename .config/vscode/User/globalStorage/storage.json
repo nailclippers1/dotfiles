@@ -1,0 +1,41 @@
+{
+    "telemetry.machineId": "e04133e70717c17881a88081e1598e025677b0cde1aef869887550fbab47d79c",
+    "theme": "vs-dark",
+    "themeBackground": "#161821",
+    "windowSplash": {
+        "baseTheme": "vs-dark",
+        "colorInfo": {
+            "foreground": "#c6c8d1",
+            "background": "#161821",
+            "editorBackground": "#161821",
+            "titleBarBackground": "#0f1117",
+            "activityBarBackground": "#161821",
+            "sideBarBackground": "#161821",
+            "statusBarBackground": "#0f1117",
+            "statusBarNoFolderBackground": "#0f1117"
+        },
+        "layoutInfo": {
+            "sideBarSide": "left",
+            "editorPartMinWidth": 220,
+            "titleBarHeight": 30,
+            "activityBarWidth": 48,
+            "sideBarWidth": 0,
+            "statusBarHeight": 22,
+            "windowBorder": false
+        }
+    },
+    "windowsState": {
+        "lastActiveWindow": {
+            "backupPath": "C:\\Users\\taishi\\AppData\\Roaming\\Code\\Backups\\1652593977112",
+            "uiState": {
+                "mode": 1,
+                "x": 415,
+                "y": 47,
+                "width": 920,
+                "height": 979
+            }
+        },
+        "openedWindows": []
+    },
+    "pickerWorkingDir": "C:\\Users"
+}

@@ -1,0 +1,14 @@
+{
+    "editor.minimap.enabled": false,
+    "editor.renderWhitespace": "all",
+    "editor.renderControlCharacters": true,
+    "files.trimTrailingWhitespace": true,
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "workbench.editor.untitled.hint": "hidden",
+    "vscode-neovim.neovimInitVimPaths.darwin": "/Users/taishi/.config/nvim/init.vim",
+    "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
+    "workbench.colorTheme": "Iceberg",
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+    "vscode-neovim.neovimInitVimPaths.linux": "/mnt/c/Users/taish/.config/nvim/init.vim"
+}
