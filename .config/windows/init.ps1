@@ -40,6 +40,9 @@ if (!(Test-Path $env:USERPROFILE\share)) {
     New-Item $env:USERPROFILE\share -ItemType Junction -Value $sources\share
 }
 
+# change MS-IME user dict path
+$env:SystemRoot\system32\ime\IMEJP\IMJPUEX.EXE setcustomdictpath $sources\share\MS-IME\imjp15cu.dic
+
 if (!(Test-Path $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState.sav)) {
     Rename-Item $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState.sav
     New-Item $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState -ItemType Junction -Value $env:USERPROFILE\.config\windows\WindowsTerminal\LocalState
