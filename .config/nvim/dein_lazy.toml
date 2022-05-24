@@ -24,6 +24,34 @@ autocmd MyAutoCmd FileType c,help,gitcommit
 '''
 
 # ======================================
+# dark-power series
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+on_event = 'CursorHold'
+hook_source = '''
+  " Note: for profile
+  "let g:denops#server#deno_args = [
+  "    \ '-q',
+  "    \ '--no-check',
+  "    \ '--unstable',
+  "    \ '-A',
+  "    \ '--inspect',
+  "    \ ]
+'''
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+hook_source = '''
+let g:context_filetype#ignore_patterns = {
+    \ 'toml': ['^\s*#\s*'],
+    \ }
+'''
+
+[[plugins]]
+repo = 'BurntSushi/ripgrep'
+
+# ======================================
 # markdown
 
 [[plugins]]
@@ -39,7 +67,6 @@ repo = 'junegunn/limelight.vim'
 
 [[plugins]]
 repo = 'plasticboy/vim-markdown'
-on_ft = 'md'
 hook_add = '''
     let g:vim_markdown_folding_disabled = 1
     let g:vim_markdown_auto_insert_bullets = 0
@@ -48,12 +75,12 @@ hook_add = '''
 
 [[plugins]]
 repo = 'kannokanno/previm'
-on_source = 'vim-markdown'
 hook_add = '''
     autocmd BufRead,BufNewFile *.md set filetype=markdown
     "let g:previm_open_cmd = 'Chrome'
     "let g:previm_open_cmd = 'Firefox'
-    let g:previm_open_cmd = 'C:\\Program\ Files\\Mozilla\ Firefox\\firefox.exe'
+    let g:previm_enable_realtime = 1
+    let g:previm_open_cmd = 'C:\\Program\ Files\ (x86)\\Google\\Chrome\\Application\\chrome.exe'
     "let g:previm_wsl_mode = 1
     nnoremap <silent> <C-p> :PrevimOpen<CR>
 '''

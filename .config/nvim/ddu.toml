@@ -8,18 +8,17 @@ on_source = 'denops.vim'
 
 # =====================================
 # Key mappings
-
 hook_add = '''
   nnoremap s<Space> <Cmd>Ddu
   \ -name=files file_rec
-  \ -source-option-path='`fnamemodify($MYVIMRC, ':h').'/'`'<CR>
-  nnoremap ;s <Cmd>Ddu 
-  \ -name=files file_point file_old
+  \ -source-option-path='`fnamemodify($MYVIMRC, ':h').'/rc'`'<CR>
+  nnoremap ;s
+  \ <Cmd>Ddu -name=files file_point file_old
   \ `finddir('.git', ';') != '' ? 'file_external' : 'file_rec'`
   \ -sync -ui-param-displaySourceName=short<CR>
- " nnoremap / <Cmd>Ddu
- " \ -name=search line
- " \ -ui-param-startFilter<CR>
+  nnoremap ;/ <Cmd>Ddu
+  \ -name=search line
+  \ -ui-param-startFilter<CR>
   nnoremap * <Cmd>Ddu
   \ -name=search line -input=`expand('<cword>')`
   \ -ui-param-startFilter=v:false<CR>
@@ -45,43 +44,90 @@ hook_add = '''
 
 hook_source = '''
 call ddu#custom#alias('source', 'file_rg', 'file_external')
-
 call ddu#custom#patch_global({
-\   'ui': 'ff',
-\   'sourceOptions': {
-\     '_': {
-\       'ignoreCase': v:true,
-\       'matchers': ['matcher_substring'],
-\     },
-\     'file_old': {
-\       'matchers': ['matcher_substring', 'matcher_relative', 'matcher_hidden']
-\     },
-\     'file_external': {
-\       'matchers': [
-\         'matcher_substring', 'matcher_hidden',
-\       ],
-\     'file_rec': {
-\       'matchers': ['matcher_substring', 'matcher_hidden']
-\     },
-\   },
-\   'filterParams': {
-\     'matcher_substring': {
-\       'highlightMatched': 'Search',
-\     },
-\   },  
-\   'kindOptions': {
-\     'file': {
-\       'defaultAction': 'open',
-\     },
-\   },
-\})
-
+    \   'ui': 'ff',
+    \   'sourceOptions': {
+    \     '_': {
+    \       'ignoreCase': v:true,
+    \       'matchers': ['matcher_substring'],
+    \     },
+    \     'file_old': {
+    \       'matchers': [
+    \         'matcher_substring', 'matcher_relative', 'matcher_hidden',
+    \       ],
+    \     },
+    \     'file_external': {
+    \       'matchers': [
+    \         'matcher_substring', 'matcher_hidden',
+    \       ],
+    \     },
+    \     'file_rec': {
+    \       'matchers': [
+    \         'matcher_substring', 'matcher_hidden',
+    \       ],
+    \     },
+    \     'dein': {
+    \       'defaultAction': 'cd',
+    \     },
+    \   },
+    \   'sourceParams': {
+    \     'file_external': {
+    \       'cmd': ['git', 'ls-files', '-co', '--exclude-standard'],
+    \     },
+    \   },
+    \   'uiParams': {
+    \     'ff': {
+    \       'filterSplitDirection': 'floating',
+    \       'previewFloating': v:true,
+    \     }
+    \   },
+    \   'kindOptions': {
+    \     'file': {
+    \       'defaultAction': 'open',
+    \     },
+    \     'word': {
+    \       'defaultAction': 'append',
+    \     },
+    \     'deol': {
+    \       'defaultAction': 'switch',
+    \     },
+    \     'action': {
+    \       'defaultAction': 'do',
+    \     },
+    \   },
+    \   'actionOptions': {
+    \     'narrow': {
+    \       'quit': v:false,
+    \     },
+    \   },
+    \ })
 call ddu#custom#patch_local('files', {
     \   'uiParams': {
     \     'ff': {
     \       'split': has('nvim') ? 'floating' : 'horizontal',
     \     }
     \   },
+    \ })
+call ddu#custom#patch_global({
+    \   'sourceParams': {
+    \     'file_rg': {
+    \       'cmd': ['rg', '--files', '--glob', '!.git',
+    \               '--color', 'never', '--no-messages'],
+    \       'updateItems': 50000,
+    \     },
+    \     'rg': {
+    \       'args': [
+    \         '--ignore-case', '--column', '--no-heading', '--color', 'never',
+    \       ],
+    \     },
+    \   }
+    \ })
+call ddu#custom#patch_global({
+    \   'filterParams': {
+    \     'matcher_substring': {
+    \       'highlightMatched': 'Search',
+    \     },
+    \   }
     \ })
 '''
 
@@ -215,27 +261,20 @@ repo = 'Shougo/ddu-source-register'
 on_source = 'ddu.vim'
 
 [[plugins]]
+repo = 'Shougo/ddu-source-action'
+on_source = 'ddu.vim'
+
+[[plugins]]
 repo = 'matsui54/ddu-source-file_external'
 on_source = 'ddu.vim'
 
 [[plugins]]
-repo = 'shun/ddu-source-buffer'
+repo = 'matsui54/ddu-source-command_history'
 on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'shun/ddu-source-rg'
 on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'lambdalisue/mr.vim'
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'kuuote/ddu-source-mr'
-on_source = 'ddu.vim'
-
-# =====================================
-# Plugins for matcher
 
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
@@ -250,6 +289,13 @@ repo = 'Shougo/ddu-filter-matcher_hidden'
 on_source = 'ddu.vim'
 
 [[plugins]]
+repo = 'Shougo/ddu-filter-converter_display_word'
+on_source = 'ddu.vim'
+
+[[plugins]]
 repo = 'Shougo/ddu-kind-file'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'Shougo/ddu-kind-word'
+on_source = 'ddu.vim'
