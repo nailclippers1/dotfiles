@@ -57,7 +57,7 @@ echo "set Environment variables"
 $env:XDG_CACHE_HOME="$env:USERPROFILE\.cache"
 $env:XDG_CONFIG_HOME="$env:UserPROFILE\.config"
 [Environment]::SetEnvironmentVariable("LANG","en_US",[System.EnvironmentVariableTarget]::Machine)
-[Environment]::SetEnvironmentVariable("MOCWORD_DATA","$enf:USERPROFILE\share\dict\mocword.sqlite",[System.EnvironmentVariableTarget]::Machine)
+[Environment]::SetEnvironmentVariable("MOCWORD_DATA","$env:USERPROFILE\share\dict\mocword.sqlite",[System.EnvironmentVariableTarget]::Machine)
 
 if (-! $env:PATH.Contains("$env:USERPROFILE\bin")) {
     Set-item Env:\Path $env:PATH";$($env:USERPROFILE)\bin"
