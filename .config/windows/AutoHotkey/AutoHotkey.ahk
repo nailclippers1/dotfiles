@@ -39,10 +39,10 @@ F24 & u::send,     {Blind}^{z}        ; undo
 F24 & r::send,     {Blind}^{y}        ; redo
 F24 & x::send,     {Blind}{Delete}    ; x
 
-F24 & m::send,     {Blind}{Home} ; m
-F24 & sc033::send, {Blind}{End}  ; Comma
-F24 & sc034::send, {Blind}{PgUp} ; Period
-F24 & sc035::send, {Blind}{PgDn} ; Slash
+F24 & n::send,     {Blind}{Home} ; n
+F24 & m::send,     {Blind}{End}  ; m
+F24 & sc033::send, {Blind}{PgUp} ; Comma
+F24 & sc034::send, {Blind}{PgDn} ; Period
 
 F24 & Tab::send, {Blind}{CapsLock}
 F24 & Space::send, {Blind}{Enter}

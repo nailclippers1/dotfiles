@@ -19,6 +19,20 @@ if &runtimepath !~# '/dein.vim'
 endif
 " }}}
 
+" --------------------------------------
+" dein configurations.
+
+" In Windows, auto_recache is disabled.  It is too slow.
+let g:dein#auto_recache = !has('win32')
+
+let g:dein#lazy_rplugins = v:true
+let g:dein#install_progress_type = 'floating'
+let g:dein#install_check_diff = v:true
+let g:dein#enable_notification = v:true
+let g:dein#install_check_remote_threshold = 24 * 60 * 60
+let g:dein#auto_remote_plugins = v:false
+let g:dein#install_copy_vim = has('nvim')
+
 " begin settings {{{
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
@@ -28,6 +42,7 @@ if dein#load_state(s:dein_dir)
   if !isdirectory(s:base_dir)
     call mkdir(s:base_dir, 'p')
   endif
+
   let s:dein_toml      = s:base_dir . '/dein.toml'
   let s:dein_lazy_toml = s:base_dir . '/dein_lazy.toml'
   let s:dein_ddc_toml  = s:base_dir . '/ddc.toml'
