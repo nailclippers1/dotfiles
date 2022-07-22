@@ -24,7 +24,6 @@ endif
 
 " ======================================
 " general
-
 set ruler
 set noswapfile
 set mouse=a
@@ -46,6 +45,11 @@ set smartcase
 set incsearch
 set hlsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
+
+" reset augroup
+augroup MyAutoCmd
+    autocmd!
+augroup END
 
 " encoding
 set encoding=utf-8

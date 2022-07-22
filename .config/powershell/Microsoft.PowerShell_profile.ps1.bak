@@ -1,5 +1,3 @@
-# to overwrite the existing profile, create new profile with "ni $profile" and replace its content.
-
 # edit the following key to change $profile path (Microsoft.PowerShell_profile.ps1) 
 #HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders
 
@@ -12,7 +10,7 @@ Set-Alias vim 'C:\Program Files\Neovim\bin\nvim.exe'
 Set-Alias vi 'C:\Program Files\Neovim\bin\nvim.exe'
 
 # gitup -> git add & commit & push
-#git add -A && git commit -m "$(date)" && git push origin $(git branch | sed -n -e "s/^\* \(.*\)/\2/p")
+#git add -A && git commit -m "$(date)" && git push origin $(git branch | sed -n -e "s/^\* \(.*\)/\1/p")
 function gitup(){
     git add -A && git commit -m $(Get-Date -F G) && git push
 }

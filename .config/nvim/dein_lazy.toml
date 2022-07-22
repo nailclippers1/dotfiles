@@ -1,27 +1,4 @@
 # dein_lazy.toml
-# ======================================
-
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-# if = 'has("nvim") && !has("win32")'
-on_event = 'BufRead'
-hook_post_update = 'TSUpdate'
-hook_source = '''
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    ensure_installed = 'all',
-    additional_vim_regex_highlighting = false,
-    highlight = {
-        enable = true,
-        disable = {'c', 'help'},
-    },
-}
-EOF
-
-" Enable syntax for non treesitter highlights
-autocmd MyAutoCmd FileType c,help,gitcommit
-\ if &l:syntax == '' | syntax enable | endif
-'''
 
 # ======================================
 # dark-power series
@@ -40,16 +17,8 @@ hook_source = '''
   "    \ ]
 '''
 
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-hook_source = '''
-let g:context_filetype#ignore_patterns = {
-    \ 'toml': ['^\s*#\s*'],
-    \ }
-'''
-
-[[plugins]]
-repo = 'BurntSushi/ripgrep'
+#[[plugins]]
+#repo = 'BurntSushi/ripgrep'
 
 # ======================================
 # markdown

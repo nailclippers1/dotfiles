@@ -1,16 +1,7 @@
 # dein.toml
-# ======================================
-
-# Enable dein toml syntax
-hook_add = '''
-  autocmd CursorHold *.toml call dein#toml#syntax()
-'''
 
 # ======================================
 # general
-
-[[plugins]]
-repo = 'sheerun/vim-polyglot'
 
 [[plugins]]
 repo = 'markonm/traces.vim'
@@ -66,12 +57,28 @@ endfunction
 '''
 
 # ======================================
-# fonts and colors
+# fonts, colors and syntax
+
+[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]] # toml syntax
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+# Enable dein toml syntax
+#hook_add = '''
+#  autocmd CursorHold *.toml call dein#toml#syntax()
+#'''
 
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
-    colo hybrid
+    colorscheme hybrid
 '''
 
 [[plugins]]
@@ -116,4 +123,3 @@ hook_add = '''
     nnoremap <silent> ,m :<C-u>History<CR>
     nnoremap <silent> ,r :<C-u>Rg<CR>
 '''
-
