@@ -93,7 +93,7 @@ hook_add = '''
     \}
 '''
 
-[[plugins]]
+[[plugins]] #show diff level of parentheses in diff colors
 repo = 'luochen1990/rainbow'
 hook_add = '''
     let g:rainbow_active = 1
@@ -120,6 +120,7 @@ on_cmd = [
 hook_add = '''
     nnoremap <silent> ,f :<C-u>Files<CR>
     nnoremap <silent> ,b :<C-u>Buffers<CR>
+    nnoremap <silent> ,c :<C-u>Colors<CR>
     nnoremap <silent> ,m :<C-u>History<CR>
     nnoremap <silent> ,r :<C-u>Rg<CR>
 '''

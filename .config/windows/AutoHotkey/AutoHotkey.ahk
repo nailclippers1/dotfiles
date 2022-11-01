@@ -34,15 +34,22 @@ F24 & l::send, {Blind}{Right}
 F24 & k::send, {Blind}{Up}
 F24 & j::send, {Blind}{Down}
 
-F24 & sc027::send, {Blind}{Backspace} ; Semicolon
-F24 & u::send,     {Blind}^{z}        ; undo
-F24 & r::send,     {Blind}^{y}        ; redo
-F24 & x::send,     {Blind}{Delete}    ; x
+F24 & sc027::
+  if GetKeyState("Shift") {
+    send {Delete}                      ; <- Shift+Semicolon
+    return
+  }
+send {Blind}{Backspace}                ; <- Semicolon
+return
 
-F24 & n::send,     {Blind}{Home} ; n
-F24 & m::send,     {Blind}{End}  ; m
-F24 & sc033::send, {Blind}{PgUp} ; Comma
-F24 & sc034::send, {Blind}{PgDn} ; Period
+F24 & u::send,     {Blind}^{z}        ; <- (u)ndo
+F24 & r::send,     {Blind}^{y}        ; <- (r)edo
+F24 & x::send,     {Blind}{Delete}    ; <- x
+
+F24 & n::send,     {Blind}{Home} ; <- n
+F24 & m::send,     {Blind}{End}  ; <- m
+F24 & sc033::send, {Blind}{PgUp} ; <- Comma
+F24 & sc034::send, {Blind}{PgDn} ; <- Period
 
 F24 & Tab::send, {Blind}{CapsLock}
 F24 & Space::send, {Blind}{Enter}

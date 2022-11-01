@@ -1,29 +1,9 @@
 # dein_lazy.toml
 
 # ======================================
-# dark-power series
-
-[[plugins]]
-repo = 'vim-denops/denops.vim'
-on_event = 'CursorHold'
-hook_source = '''
-  " Note: for profile
-  "let g:denops#server#deno_args = [
-  "    \ '-q',
-  "    \ '--no-check',
-  "    \ '--unstable',
-  "    \ '-A',
-  "    \ '--inspect',
-  "    \ ]
-'''
-
-#[[plugins]]
-#repo = 'BurntSushi/ripgrep'
-
-# ======================================
 # markdown
 
-[[plugins]]
+[[plugins]] #Distraction-free writing in Vim
 repo = 'junegunn/goyo.vim'
 on_ft = 'md'
 hook_add = '''
@@ -31,35 +11,20 @@ hook_add = '''
     autocmd! User GoyoLeave Limelight!
 '''
 
-[[plugins]]
+[[plugins]] #Hyperfocus-writing in Vim
 repo = 'junegunn/limelight.vim'
 
-[[plugins]]
-repo = 'plasticboy/vim-markdown'
-hook_add = '''
-    let g:vim_markdown_folding_disabled = 1
-    let g:vim_markdown_auto_insert_bullets = 0
-    let g:vim_markdown_new_list_item_indent = 0
-'''
+[[plugins]] #Distraction-free coding for Neovim
+repo = 'folke/zen-mode.nvim'
 
 [[plugins]]
-repo = 'kannokanno/previm'
-hook_add = '''
-    autocmd BufRead,BufNewFile *.md set filetype=markdown
-    "let g:previm_open_cmd = 'Chrome'
-    "let g:previm_open_cmd = 'Firefox'
-    let g:previm_enable_realtime = 1
-    let g:previm_open_cmd = 'C:\\Program\ Files\ (x86)\\Google\\Chrome\\Application\\chrome.exe'
-    "let g:previm_wsl_mode = 1
-    nnoremap <silent> <C-p> :PrevimOpen<CR>
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown', 'pandoc.markdown', 'rmd']
+hook_post_update = '''
+    call mkdp#util#install()
 '''
-
-[[plugins]]
-repo = 'tyru/open-browser.vim'
 hook_add = '''
-    let g:netrw_nogx = 1 " disable netrw's gx mapping.
-    nmap gx <Plug>(openbrowser-smart-search)
-    vmap gx <Plug>(openbrowser-smart-search)
+    nnoremap <silent> <C-p> :MarkdownPreview<CR>
 '''
 
 [[plugins]]
