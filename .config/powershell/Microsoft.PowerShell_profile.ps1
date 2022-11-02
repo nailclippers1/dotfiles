@@ -2,6 +2,7 @@
 
 # edit the following key to change $profile path (Microsoft.PowerShell_profile.ps1) 
 #HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders
+# Value Name: Personal
 
 # Aliases
 Set-Alias grep Select-String
