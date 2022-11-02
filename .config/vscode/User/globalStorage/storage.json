@@ -29,13 +29,26 @@
             "backupPath": "C:\\Users\\taishi\\AppData\\Roaming\\Code\\Backups\\1653403724901",
             "uiState": {
                 "mode": 1,
-                "x": 430,
-                "y": 173,
+                "x": 77,
+                "y": 94,
                 "width": 920,
                 "height": 979
             }
         },
         "openedWindows": []
     },
-    "pickerWorkingDir": "C:\\Users"
+    "pickerWorkingDir": "C:\\Users",
+    "backupWorkspaces": {
+        "workspaces": [],
+        "folders": [
+            {
+                "folderUri": "file:///c%3A/Users/taishi"
+            }
+        ],
+        "emptyWindows": [
+            {
+                "backupFolder": "1653403724901"
+            }
+        ]
+    }
 }
